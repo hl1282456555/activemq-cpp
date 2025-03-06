@@ -183,7 +183,7 @@ void OpenSSLContextSpi::providerInit( SecureRandom* random ) {
 
         // General library initialization.
     #ifdef WIN32
-        CRYPTO_malloc_init();
+    // CRYPTO_malloc_init(); // This line is no longer needed in OpenSSL 1.1.0 and later.
     #endif
         SSL_load_error_strings();
         SSL_library_init();
