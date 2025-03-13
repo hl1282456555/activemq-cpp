@@ -85,7 +85,7 @@ unsigned char ExceptionResponse::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ExceptionResponse::toString() const {
+std::shared_ptr<std::string> ExceptionResponse::toString() const {
 
     ostringstream stream;
 
@@ -98,7 +98,7 @@ std::string ExceptionResponse::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

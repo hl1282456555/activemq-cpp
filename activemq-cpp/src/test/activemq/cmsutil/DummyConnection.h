@@ -68,8 +68,8 @@ namespace cmsutil {
             return s;
         }
 
-        virtual std::string getClientID() const {
-            return clientId;
+        virtual std::shared_ptr<std::string> getClientID() const {
+            return std::make_shared<std::string>(clientId);
         }
 
         virtual void setClientID(const std::string& id) {

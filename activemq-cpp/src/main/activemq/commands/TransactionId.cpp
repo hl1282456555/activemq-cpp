@@ -94,14 +94,14 @@ unsigned char TransactionId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string TransactionId::toString() const {
+std::shared_ptr<std::string> TransactionId::toString() const {
 
     ostringstream stream;
 
     stream << "TransactionId { ";
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +156,6 @@ TransactionId& TransactionId::operator= (const TransactionId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int TransactionId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 

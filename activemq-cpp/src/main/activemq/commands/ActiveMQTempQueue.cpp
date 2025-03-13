@@ -56,7 +56,7 @@ void ActiveMQTempQueue::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTempQueue::toString() const {
+std::shared_ptr<std::string> ActiveMQTempQueue::toString() const {
     return ActiveMQDestination::toString();
 }
 

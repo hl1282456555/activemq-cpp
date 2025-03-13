@@ -44,7 +44,7 @@ SessionState::~SessionState() {
 std::string SessionState::toString() const {
 
     if (this->info.get() != NULL) {
-        return this->info->toString();
+        return *this->info->toString();
     }
 
     return "NULL";

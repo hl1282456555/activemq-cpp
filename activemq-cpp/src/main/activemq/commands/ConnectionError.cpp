@@ -86,7 +86,7 @@ unsigned char ConnectionError::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConnectionError::toString() const {
+std::shared_ptr<std::string> ConnectionError::toString() const {
 
     ostringstream stream;
 
@@ -109,7 +109,7 @@ std::string ConnectionError::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

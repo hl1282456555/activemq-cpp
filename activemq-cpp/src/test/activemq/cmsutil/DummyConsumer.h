@@ -83,8 +83,8 @@ namespace cmsutil {
             return messageAvailableListener;
         }
 
-        virtual std::string getMessageSelector() const {
-            return selector;
+        virtual std::shared_ptr<std::string> getMessageSelector() const {
+            return std::make_shared<std::string>(selector);
         }
 
         virtual cms::MessageTransformer* getMessageTransformer() const {

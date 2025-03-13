@@ -84,7 +84,7 @@ unsigned char FlushCommand::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string FlushCommand::toString() const {
+std::shared_ptr<std::string> FlushCommand::toString() const {
 
     ostringstream stream;
 
@@ -93,7 +93,7 @@ std::string FlushCommand::toString() const {
            << "responseRequired = " << boolalpha << this->isResponseRequired();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -54,7 +54,7 @@ cms::Message* ActiveMQMessage::clone() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQMessage::toString() const {
     return ActiveMQMessageTemplate<cms::Message>::toString();
 }
 

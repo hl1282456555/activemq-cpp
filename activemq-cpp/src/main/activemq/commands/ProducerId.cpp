@@ -123,7 +123,7 @@ unsigned char ProducerId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ProducerId::toString() const {
+std::shared_ptr<std::string> ProducerId::toString() const {
 
     ostringstream stream;
 
@@ -131,7 +131,7 @@ std::string ProducerId::toString() const {
            << this->sessionId << ":"
            << this->value;
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +247,7 @@ ProducerId& ProducerId::operator= (const ProducerId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int ProducerId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

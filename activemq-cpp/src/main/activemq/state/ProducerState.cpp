@@ -36,7 +36,7 @@ ProducerState::~ProducerState() {
 std::string ProducerState::toString() const {
 
     if (this->info != NULL) {
-        return this->info->toString();
+        return *this->info->toString();
     }
 
     return "NULL";

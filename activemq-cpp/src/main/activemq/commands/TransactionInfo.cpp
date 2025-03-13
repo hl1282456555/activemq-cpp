@@ -87,7 +87,7 @@ unsigned char TransactionInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string TransactionInfo::toString() const {
+std::shared_ptr<std::string> TransactionInfo::toString() const {
 
     ostringstream stream;
 
@@ -112,7 +112,7 @@ std::string TransactionInfo::toString() const {
     stream << "Type = " << (int)this->getType();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -96,7 +96,7 @@ unsigned char LocalTransactionId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string LocalTransactionId::toString() const {
+std::shared_ptr<std::string> LocalTransactionId::toString() const {
 
     ostringstream stream;
 
@@ -104,7 +104,7 @@ std::string LocalTransactionId::toString() const {
            << this->connectionId->toString() << ":"
            << this->value;
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -205,6 +205,6 @@ LocalTransactionId& LocalTransactionId::operator= (const LocalTransactionId& oth
 
 ////////////////////////////////////////////////////////////////////////////////
 int LocalTransactionId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 

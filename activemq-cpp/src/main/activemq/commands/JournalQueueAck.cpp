@@ -86,7 +86,7 @@ unsigned char JournalQueueAck::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string JournalQueueAck::toString() const {
+std::shared_ptr<std::string> JournalQueueAck::toString() const {
 
     ostringstream stream;
 
@@ -106,7 +106,7 @@ std::string JournalQueueAck::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

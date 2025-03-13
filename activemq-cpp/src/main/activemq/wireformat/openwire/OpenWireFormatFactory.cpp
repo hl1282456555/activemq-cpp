@@ -67,8 +67,8 @@ Pointer<WireFormat> OpenWireFormatFactory::createWireFormat(const decaf::util::P
         info->setMaxInactivityDurationInitalDelay(
             Long::parseLong(properties.getProperty("wireFormat.MaxInactivityDurationInitalDelay", "10000")));
 
-        info->getProperties().setString("ProviderName", meta.getCMSProviderName());
-        info->getProperties().setString("ProviderVersion", meta.getProviderVersion());
+        info->getProperties().setString("ProviderName", *meta.getCMSProviderName());
+        info->getProperties().setString("ProviderVersion", *meta.getProviderVersion());
         info->getProperties().setString("PlatformDetails", "C++");
 
         // Create the Openwire Format Object

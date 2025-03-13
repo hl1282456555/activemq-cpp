@@ -96,7 +96,7 @@ unsigned char ConnectionInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConnectionInfo::toString() const {
+std::shared_ptr<std::string> ConnectionInfo::toString() const {
 
     ostringstream stream;
 
@@ -145,7 +145,7 @@ std::string ConnectionInfo::toString() const {
     stream << "ClientIp = " << this->getClientIp();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

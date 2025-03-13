@@ -168,7 +168,7 @@ bool ActiveMQMessageAudit::isDuplicate(decaf::lang::Pointer<MessageId> msgId) co
     if (msgId != NULL) {
         Pointer<ProducerId> pid = msgId->getProducerId();
         if (pid != NULL) {
-            std::string seed = pid->toString();
+            std::string seed = *pid->toString();
             if (!seed.empty()) {
 
                 synchronized(&this->impl->mutex) {
@@ -233,7 +233,7 @@ void ActiveMQMessageAudit::rollback(decaf::lang::Pointer<commands::MessageId> ms
     if (msgId != NULL) {
         Pointer<ProducerId> pid = msgId->getProducerId();
         if (pid != NULL) {
-            std::string seed = pid->toString();
+            std::string seed = *pid->toString();
             if (!seed.empty()) {
 
                 synchronized(&this->impl->mutex) {
@@ -302,7 +302,7 @@ bool ActiveMQMessageAudit::isInOrder(decaf::lang::Pointer<commands::MessageId> m
     if (msgId != NULL) {
         Pointer<ProducerId> pid = msgId->getProducerId();
         if (pid != NULL) {
-            std::string seed = pid->toString();
+            std::string seed = *pid->toString();
             if (!seed.empty()) {
 
                 synchronized(&this->impl->mutex) {
@@ -334,7 +334,7 @@ bool ActiveMQMessageAudit::isInOrder(decaf::lang::Pointer<commands::MessageId> m
 long long ActiveMQMessageAudit::getLastSeqId(decaf::lang::Pointer<commands::ProducerId> id) const {
     long result = -1;
     if (id != NULL) {
-        std::string seed = id->toString();
+        std::string seed = *id->toString();
         if (!seed.empty()) {
 
             synchronized(&this->impl->mutex) {

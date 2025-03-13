@@ -95,16 +95,17 @@ void ActiveMQTextMessage::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTextMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQTextMessage::toString() const {
 
     try {
 
-        std::string text = getText();
+        std::string text = *getText();
 
         if (text != "" && text.length() > 63) {
 
             text = text.substr(0, 45) + "..." + text.substr(text.length() - 12);
-            return ActiveMQMessageTemplate<cms::TextMessage>::toString() + "Text = " + text;
+            text = *ActiveMQMessageTemplate<cms::TextMessage>::toString() + "Text = " + text;
+            return std::make_shared<std::string>(std::move(text));
         }
 
     } catch (cms::CMSException& e) {
@@ -176,43 +177,7 @@ unsigned int ActiveMQTextMessage::getSize() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTextMessage::getText() const {
-
-    try {
-
-        if (this->text.get() != NULL) {
-            return *(this->text.get());
-        } else {
-
-            if (this->getContent().size() <= 4) {
-                return "";
-            }
-
-            try {
-
-                InputStream* is = new ByteArrayInputStream(getContent());
-
-                if (isCompressed()) {
-                    is = new InflaterInputStream(is, true);
-                }
-
-                DataInputStream dataIn(is, true);
-
-                this->text.reset(new std::string(MarshallingSupport::readString32(dataIn)));
-
-                dataIn.close();
-
-            } catch (IOException& ioe) {
-                throw CMSExceptionSupport::create(ioe);
-            }
-        }
-
-        return *(this->text.get());
-    }
-    AMQ_CATCH_ALL_THROW_CMSEXCEPTION()}
-
-////////////////////////////////////////////////////////////////////////////////
-std::shared_ptr<std::string> activemq::commands::ActiveMQTextMessage::getTextPtr() const
+std::shared_ptr<std::string> activemq::commands::ActiveMQTextMessage::getText() const
 {
     try
     {

@@ -358,7 +358,7 @@ Pointer<StompFrame> StompWireFormat::marshalMessage(const Pointer<Command> comma
     // Convert the Content
     try {
         Pointer<ActiveMQTextMessage> txtMessage = message.dynamicCast<ActiveMQTextMessage>();
-        std::string text = txtMessage->getText();
+        std::string text = *txtMessage->getText();
         frame->setBody((unsigned char*) text.c_str(), text.length() + 1);
         return frame;
     } catch (ClassCastException& ex) {

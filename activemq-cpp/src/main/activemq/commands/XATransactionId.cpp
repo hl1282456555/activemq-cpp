@@ -127,7 +127,7 @@ unsigned char XATransactionId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string XATransactionId::toString() const {
+std::shared_ptr<std::string> XATransactionId::toString() const {
 
     ostringstream stream;
 
@@ -157,7 +157,7 @@ std::string XATransactionId::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -283,7 +283,7 @@ XATransactionId& XATransactionId::operator= (const XATransactionId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int XATransactionId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

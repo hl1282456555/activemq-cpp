@@ -86,7 +86,7 @@ void ActiveMQMapMessage::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQMapMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQMapMessage::toString() const {
     return ActiveMQMessageTemplate<cms::MapMessage>::toString();
 }
 
@@ -205,10 +205,10 @@ bool ActiveMQMapMessage::isEmpty() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<std::string> ActiveMQMapMessage::getMapNames() const {
+std::shared_ptr<std::vector<std::string>> ActiveMQMapMessage::getMapNames() const {
 
     try {
-        return getMap().keySet().toArray();
+        return std::make_shared<std::vector<std::string>>(std::move(getMap().keySet().toArray()));
     }
     AMQ_CATCH_ALL_THROW_CMSEXCEPTION()
 }
@@ -304,10 +304,10 @@ void ActiveMQMapMessage::setByte(const std::string& name, unsigned char value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<unsigned char> ActiveMQMapMessage::getBytes(const std::string& name) const {
+std::shared_ptr<std::vector<unsigned char>> ActiveMQMapMessage::getBytes(const std::string& name) const {
 
     try {
-        return getMap().getByteArray(name);
+        return std::make_shared<std::vector<unsigned char>>(std::move(getMap().getByteArray(name)));
     } catch (UnsupportedOperationException& ex) {
         throw CMSExceptionSupport::createMessageFormatException(ex);
     }
@@ -451,10 +451,10 @@ void ActiveMQMapMessage::setShort(const std::string& name, short value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQMapMessage::getString(const std::string& name) const {
+std::shared_ptr<std::string> ActiveMQMapMessage::getString(const std::string& name) const {
 
     try {
-        return getMap().getString(name);
+        return std::make_shared<std::string>(std::move(getMap().getString(name)));
     } catch (UnsupportedOperationException& ex) {
         throw CMSExceptionSupport::createMessageFormatException(ex);
     }

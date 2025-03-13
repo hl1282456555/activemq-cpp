@@ -90,7 +90,7 @@ unsigned char SubscriptionInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string SubscriptionInfo::toString() const {
+std::shared_ptr<std::string> SubscriptionInfo::toString() const {
 
     ostringstream stream;
 
@@ -118,7 +118,7 @@ std::string SubscriptionInfo::toString() const {
     stream << "NoLocal = " << this->isNoLocal();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

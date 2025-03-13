@@ -87,7 +87,7 @@ unsigned char JournalTransaction::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string JournalTransaction::toString() const {
+std::shared_ptr<std::string> JournalTransaction::toString() const {
 
     ostringstream stream;
 
@@ -104,7 +104,7 @@ std::string JournalTransaction::toString() const {
     stream << "WasPrepared = " << this->getWasPrepared();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

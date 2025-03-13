@@ -86,7 +86,7 @@ unsigned char ProducerAck::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ProducerAck::toString() const {
+std::shared_ptr<std::string> ProducerAck::toString() const {
 
     ostringstream stream;
 
@@ -104,7 +104,7 @@ std::string ProducerAck::toString() const {
     stream << "Size = " << this->getSize();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

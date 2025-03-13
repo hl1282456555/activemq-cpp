@@ -114,7 +114,7 @@ void ActiveMQConsumer::close() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConsumer::getMessageSelector() const {
+std::shared_ptr<std::string> ActiveMQConsumer::getMessageSelector() const {
 
     try {
         return this->config->kernel->getMessageSelector();

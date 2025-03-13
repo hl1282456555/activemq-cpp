@@ -44,8 +44,8 @@ namespace correlator {
 
         virtual ~MyCommand() {}
 
-        virtual std::string toString() const {
-            return "";
+        virtual std::shared_ptr<std::string> toString() const {
+            return std::make_shared<std::string>("");
         }
 
         virtual unsigned char getDataStructureType() const {

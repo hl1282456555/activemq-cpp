@@ -56,7 +56,7 @@ void ActiveMQTempTopic::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTempTopic::toString() const {
+std::shared_ptr<std::string> ActiveMQTempTopic::toString() const {
     return ActiveMQDestination::toString();
 }
 

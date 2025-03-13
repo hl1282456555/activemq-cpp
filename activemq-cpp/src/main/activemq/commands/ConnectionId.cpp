@@ -119,9 +119,9 @@ unsigned char ConnectionId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConnectionId::toString() const {
+std::shared_ptr<std::string> ConnectionId::toString() const {
 
-    return this->value;
+    return std::make_shared<std::string>(this->value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -199,6 +199,6 @@ ConnectionId& ConnectionId::operator= (const ConnectionId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int ConnectionId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 

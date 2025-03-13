@@ -30,8 +30,8 @@ ActiveMQConnectionMetaData::~ActiveMQConnectionMetaData() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConnectionMetaData::getCMSVersion() const {
-    return "3.2";
+std::shared_ptr<std::string> ActiveMQConnectionMetaData::getCMSVersion() const {
+    return std::make_shared<std::string>("3.2");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,13 +45,13 @@ int ActiveMQConnectionMetaData::getCMSMinorVersion() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConnectionMetaData::getCMSProviderName() const {
-    return "activemq-cpp";
+std::shared_ptr<std::string> ActiveMQConnectionMetaData::getCMSProviderName() const {
+    return std::make_shared<std::string>("activemq-cpp");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConnectionMetaData::getProviderVersion() const {
-    return "3.9.5";
+std::shared_ptr<std::string> ActiveMQConnectionMetaData::getProviderVersion() const {
+    return std::make_shared<std::string>("3.9.5");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ int ActiveMQConnectionMetaData::getProviderPatchVersion() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<std::string> ActiveMQConnectionMetaData::getCMSXPropertyNames() const {
+std::shared_ptr<std::vector<std::string>> ActiveMQConnectionMetaData::getCMSXPropertyNames() const {
 
     std::vector<std::string> jmxProperties;
 
@@ -80,5 +80,5 @@ std::vector<std::string> ActiveMQConnectionMetaData::getCMSXPropertyNames() cons
     jmxProperties.push_back( "JMSXDeliveryCount" );
     jmxProperties.push_back( "JMSXProducerTXID" );
 
-    return jmxProperties;
+    return std::make_shared<std::vector<std::string>>(std::move(jmxProperties));
 }

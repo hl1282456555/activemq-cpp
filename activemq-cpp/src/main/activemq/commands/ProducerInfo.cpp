@@ -89,7 +89,7 @@ unsigned char ProducerInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ProducerInfo::toString() const {
+std::shared_ptr<std::string> ProducerInfo::toString() const {
 
     ostringstream stream;
 
@@ -131,7 +131,7 @@ std::string ProducerInfo::toString() const {
     stream << "WindowSize = " << this->getWindowSize();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

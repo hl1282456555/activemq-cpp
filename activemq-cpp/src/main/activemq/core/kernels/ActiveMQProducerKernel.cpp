@@ -76,7 +76,7 @@ ActiveMQProducerKernel::ActiveMQProducerKernel(ActiveMQSessionKernel* session,
     if (destination != NULL) {
         const ActiveMQProperties& options = destination->getOptions();
         this->producerInfo->setDispatchAsync(
-            Boolean::parseBoolean(options.getProperty("producer.dispatchAsync", "false")));
+            Boolean::parseBoolean(*options.getProperty("producer.dispatchAsync", "false")));
 
         this->destination = destination.dynamicCast<cms::Destination>();
     }

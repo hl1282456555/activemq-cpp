@@ -98,7 +98,7 @@ unsigned char BrokerInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string BrokerInfo::toString() const {
+std::shared_ptr<std::string> BrokerInfo::toString() const {
 
     ostringstream stream;
 
@@ -149,7 +149,7 @@ std::string BrokerInfo::toString() const {
     stream << "NetworkProperties = " << this->getNetworkProperties();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

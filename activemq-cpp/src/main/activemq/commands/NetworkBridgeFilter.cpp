@@ -87,7 +87,7 @@ unsigned char NetworkBridgeFilter::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string NetworkBridgeFilter::toString() const {
+std::shared_ptr<std::string> NetworkBridgeFilter::toString() const {
 
     ostringstream stream;
 
@@ -104,7 +104,7 @@ std::string NetworkBridgeFilter::toString() const {
     stream << "ConsumerTTL = " << this->getConsumerTTL();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

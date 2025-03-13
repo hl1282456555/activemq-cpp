@@ -87,7 +87,7 @@ unsigned char RemoveSubscriptionInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string RemoveSubscriptionInfo::toString() const {
+std::shared_ptr<std::string> RemoveSubscriptionInfo::toString() const {
 
     ostringstream stream;
 
@@ -107,7 +107,7 @@ std::string RemoveSubscriptionInfo::toString() const {
     stream << "ClientId = " << this->getClientId();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

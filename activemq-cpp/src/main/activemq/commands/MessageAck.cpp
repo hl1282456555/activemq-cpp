@@ -117,7 +117,7 @@ unsigned char MessageAck::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string MessageAck::toString() const {
+std::shared_ptr<std::string> MessageAck::toString() const {
 
     ostringstream stream;
 
@@ -172,7 +172,7 @@ std::string MessageAck::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

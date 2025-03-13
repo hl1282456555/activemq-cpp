@@ -34,7 +34,7 @@ ConsumerState::~ConsumerState() {
 std::string ConsumerState::toString() const {
 
     if (this->info != NULL) {
-        return this->info->toString();
+        return *this->info->toString();
     }
 
     return "NULL";

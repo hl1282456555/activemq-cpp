@@ -107,7 +107,7 @@ unsigned char ConsumerId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConsumerId::toString() const {
+std::shared_ptr<std::string> ConsumerId::toString() const {
 
     ostringstream stream;
 
@@ -115,7 +115,7 @@ std::string ConsumerId::toString() const {
            << this->sessionId << ":"
            << this->value;
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +231,7 @@ ConsumerId& ConsumerId::operator= (const ConsumerId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int ConsumerId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

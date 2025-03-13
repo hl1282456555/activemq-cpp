@@ -94,7 +94,7 @@ unsigned char ConnectionControl::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConnectionControl::toString() const {
+std::shared_ptr<std::string> ConnectionControl::toString() const {
 
     ostringstream stream;
 
@@ -130,7 +130,7 @@ std::string ConnectionControl::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

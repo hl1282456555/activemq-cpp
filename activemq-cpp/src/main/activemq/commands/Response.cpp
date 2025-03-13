@@ -85,7 +85,7 @@ unsigned char Response::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Response::toString() const {
+std::shared_ptr<std::string> Response::toString() const {
 
     ostringstream stream;
 
@@ -96,7 +96,7 @@ std::string Response::toString() const {
     stream << "CorrelationId = " << this->getCorrelationId();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

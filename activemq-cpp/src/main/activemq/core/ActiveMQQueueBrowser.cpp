@@ -140,8 +140,8 @@ const cms::Queue* ActiveMQQueueBrowser::getQueue() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQQueueBrowser::getMessageSelector() const {
-    return this->selector;
+std::shared_ptr<std::string> ActiveMQQueueBrowser::getMessageSelector() const {
+    return std::make_shared<std::string>(this->selector);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

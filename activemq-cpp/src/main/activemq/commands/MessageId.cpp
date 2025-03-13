@@ -131,7 +131,7 @@ unsigned char MessageId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string MessageId::toString() const {
+std::shared_ptr<std::string> MessageId::toString() const {
 
     if (key.empty()) {
         if (!textView.empty()) {
@@ -141,12 +141,12 @@ std::string MessageId::toString() const {
                 key = "ID:" + textView;
             }
         } else {
-            this->key = this->producerId->toString() + ":" + 
+            this->key = *this->producerId->toString() + ":" + 
                         Long::toString(this->producerSequenceId);
         }
     }
 
-    return this->key;
+    return std::make_shared<std::string>(this->key);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +289,7 @@ MessageId& MessageId::operator= (const MessageId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int MessageId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

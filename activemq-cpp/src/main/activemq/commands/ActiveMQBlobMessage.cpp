@@ -59,7 +59,7 @@ void ActiveMQBlobMessage::copyDataStructure( const DataStructure* src ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQBlobMessage::toString() const{
+std::shared_ptr<std::string> ActiveMQBlobMessage::toString() const{
     return ActiveMQMessageTemplate<cms::Message>::toString();
 }
 

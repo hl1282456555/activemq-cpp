@@ -75,16 +75,16 @@ bool ActiveMQMessageTransformation::transformDestination(const cms::Destination*
 
         if (dynamic_cast<const cms::TemporaryQueue*>(destination) != NULL) {
             *amqDestination = new ActiveMQTempQueue(
-                dynamic_cast<const cms::TemporaryQueue*>(destination)->getQueueName());
+               *dynamic_cast<const cms::TemporaryQueue*>(destination)->getQueueName());
         } else if (dynamic_cast<const cms::TemporaryTopic*>(destination) != NULL) {
             *amqDestination = new ActiveMQTempTopic(
-                dynamic_cast<const cms::TemporaryTopic*>(destination)->getTopicName());
+               *dynamic_cast<const cms::TemporaryTopic*>(destination)->getTopicName());
         } else if (dynamic_cast<const cms::Queue*>(destination) != NULL) {
             *amqDestination = new ActiveMQQueue(
-                dynamic_cast<const cms::Queue*>(destination)->getQueueName());
+                *dynamic_cast<const cms::Queue*>(destination)->getQueueName());
         } else if (dynamic_cast<const cms::Topic*>(destination) != NULL) {
             *amqDestination = new ActiveMQTopic(
-                dynamic_cast<const cms::Topic*>(destination)->getTopicName());
+                *dynamic_cast<const cms::Topic*>(destination)->getTopicName());
         }
     } else {
         return false;
@@ -131,7 +131,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
             ActiveMQMapMessage* msg = new ActiveMQMapMessage();
             msg->setConnection(connection);
 
-            std::vector<std::string> elements = mapMsg->getMapNames();
+            std::vector<std::string> elements = *mapMsg->getMapNames();
             std::vector<std::string>::iterator iter = elements.begin();
             for(; iter != elements.end() ; ++iter) {
                 std::string key = *iter;
@@ -145,7 +145,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
                         msg->setByte(key, mapMsg->getByte(key));
                         break;
                     case cms::Message::BYTE_ARRAY_TYPE:
-                        msg->setBytes(key, mapMsg->getBytes(key));
+                        msg->setBytes(key, *mapMsg->getBytes(key));
                         break;
                     case cms::Message::CHAR_TYPE:
                         msg->setChar(key, mapMsg->getChar(key));
@@ -166,7 +166,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
                         msg->setDouble(key, mapMsg->getDouble(key));
                         break;
                     case cms::Message::STRING_TYPE:
-                        msg->setString(key, mapMsg->getString(key));
+                        msg->setString(key, *mapMsg->getString(key));
                         break;
                     default:
                         break;
@@ -178,7 +178,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
             cms::ObjectMessage* objMsg = dynamic_cast<cms::ObjectMessage*>(message);
             ActiveMQObjectMessage* msg = new ActiveMQObjectMessage();
             msg->setConnection(connection);
-            msg->setObjectBytes(objMsg->getObjectBytes());
+            msg->setObjectBytes(*objMsg->getObjectBytes());
             *amqMessage = msg;
         } else if (dynamic_cast<cms::StreamMessage*>(message) != NULL) {
             cms::StreamMessage* streamMessage = dynamic_cast<cms::StreamMessage*>(message);
@@ -224,7 +224,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
                             msg->writeDouble(streamMessage->readDouble());
                             break;
                         case cms::Message::STRING_TYPE:
-                            msg->writeString(streamMessage->readString());
+                            msg->writeString(*streamMessage->readString());
                             break;
                         default:
                             break;
@@ -240,7 +240,7 @@ bool ActiveMQMessageTransformation::transformMessage(cms::Message* message, Acti
             cms::TextMessage* textMsg = dynamic_cast<cms::TextMessage*>(message);
             ActiveMQTextMessage* msg = new ActiveMQTextMessage();
             msg->setConnection(connection);
-            msg->setText(textMsg->getText());
+            msg->setText(*textMsg->getText());
             *amqMessage = msg;
         } else {
             *amqMessage = new ActiveMQMessage();
@@ -284,16 +284,16 @@ void ActiveMQMessageTransformation::copyProperties(const cms::Message* fromMessa
         }
     }
 
-    toMessage->setCMSMessageID(fromMessage->getCMSMessageID());
-    toMessage->setCMSCorrelationID(fromMessage->getCMSCorrelationID());
+    toMessage->setCMSMessageID(*fromMessage->getCMSMessageID());
+    toMessage->setCMSCorrelationID(*fromMessage->getCMSCorrelationID());
     toMessage->setCMSDeliveryMode(fromMessage->getCMSDeliveryMode());
     toMessage->setCMSRedelivered(fromMessage->getCMSRedelivered());
-    toMessage->setCMSType(fromMessage->getCMSType());
+    toMessage->setCMSType(*fromMessage->getCMSType());
     toMessage->setCMSExpiration(fromMessage->getCMSExpiration());
     toMessage->setCMSPriority(fromMessage->getCMSPriority());
     toMessage->setCMSTimestamp(fromMessage->getCMSTimestamp());
 
-    std::vector<std::string> propertyNames = fromMessage->getPropertyNames();
+    std::vector<std::string> propertyNames = *fromMessage->getPropertyNames();
     std::vector<std::string>::iterator iter = propertyNames.begin();
     for(; iter != propertyNames.end() ; ++iter) {
         std::string name = *iter;
@@ -322,7 +322,7 @@ void ActiveMQMessageTransformation::copyProperties(const cms::Message* fromMessa
                 toMessage->setDoubleProperty(name, fromMessage->getDoubleProperty(name));
                 break;
             case cms::Message::STRING_TYPE:
-                toMessage->setStringProperty(name, fromMessage->getStringProperty(name));
+                toMessage->setStringProperty(name, *fromMessage->getStringProperty(name));
                 break;
             default:
                 break;

@@ -39,7 +39,7 @@ void ActiveMQProperties::copy(const CMSProperties* source) {
 
     properties.clear();
 
-    std::vector<std::pair<std::string, std::string> > vec = source->toArray();
+    std::vector<std::pair<std::string, std::string> > vec = *source->toArray();
 
     for (unsigned int ix = 0; ix < vec.size(); ++ix) {
         properties.setProperty(vec[ix].first, vec[ix].second);

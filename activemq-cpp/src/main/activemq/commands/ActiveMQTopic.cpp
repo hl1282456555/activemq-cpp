@@ -53,7 +53,7 @@ void ActiveMQTopic::copyDataStructure( const DataStructure* src ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTopic::toString() const {
+std::shared_ptr<std::string> ActiveMQTopic::toString() const {
     return ActiveMQDestination::toString();
 }
 

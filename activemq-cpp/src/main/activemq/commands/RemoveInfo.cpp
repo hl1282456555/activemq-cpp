@@ -86,7 +86,7 @@ unsigned char RemoveInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string RemoveInfo::toString() const {
+std::shared_ptr<std::string> RemoveInfo::toString() const {
 
     ostringstream stream;
 
@@ -104,7 +104,7 @@ std::string RemoveInfo::toString() const {
     stream << "LastDeliveredSequenceId = " << this->getLastDeliveredSequenceId();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -124,13 +124,13 @@ unsigned char SessionId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string SessionId::toString() const {
+std::shared_ptr<std::string> SessionId::toString() const {
 
     ostringstream stream;
 
     stream << this->connectionId << ":" << this->value;
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -227,7 +227,7 @@ SessionId& SessionId::operator= (const SessionId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int SessionId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

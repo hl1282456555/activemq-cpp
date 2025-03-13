@@ -71,7 +71,7 @@ void ActiveMQObjectMessage::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQObjectMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQObjectMessage::toString() const {
     return ActiveMQMessageTemplate<cms::ObjectMessage>::toString();
 }
 
@@ -109,7 +109,7 @@ void ActiveMQObjectMessage::setObjectBytes(const std::vector<unsigned char>& byt
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<unsigned char> ActiveMQObjectMessage::getObjectBytes() const {
+std::shared_ptr<std::vector<unsigned char>> ActiveMQObjectMessage::getObjectBytes() const {
 
     this->failIfWriteOnlyBody();
     try {
@@ -126,7 +126,7 @@ std::vector<unsigned char> ActiveMQObjectMessage::getObjectBytes() const {
                 length = dis.readInt();
 
                 if (length == 0) {
-                    return std::vector<unsigned char>();
+                    return std::make_shared<std::vector<unsigned char>>();
                 }
 
                 uncompressed.resize(length);
@@ -138,9 +138,9 @@ std::vector<unsigned char> ActiveMQObjectMessage::getObjectBytes() const {
             inflater.read(&uncompressed[0], length);
             inflater.close();
 
-            return uncompressed;
+            return std::make_shared<std::vector<unsigned char>>(uncompressed);
         } else {
-            return this->getContent();
+            return std::make_shared<std::vector<unsigned char>>(this->getContent());
         }
     }
     AMQ_CATCH_ALL_THROW_CMSEXCEPTION()

@@ -85,7 +85,7 @@ unsigned char JournalTrace::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string JournalTrace::toString() const {
+std::shared_ptr<std::string> JournalTrace::toString() const {
 
     ostringstream stream;
 
@@ -93,7 +93,7 @@ std::string JournalTrace::toString() const {
     stream << "Message = " << this->getMessage();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

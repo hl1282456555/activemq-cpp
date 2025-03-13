@@ -86,7 +86,7 @@ unsigned char ReplayCommand::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ReplayCommand::toString() const {
+std::shared_ptr<std::string> ReplayCommand::toString() const {
 
     ostringstream stream;
 
@@ -99,7 +99,7 @@ std::string ReplayCommand::toString() const {
     stream << "LastNakNumber = " << this->getLastNakNumber();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

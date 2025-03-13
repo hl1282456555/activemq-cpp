@@ -86,7 +86,7 @@ unsigned char SessionInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string SessionInfo::toString() const {
+std::shared_ptr<std::string> SessionInfo::toString() const {
 
     ostringstream stream;
 
@@ -102,7 +102,7 @@ std::string SessionInfo::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

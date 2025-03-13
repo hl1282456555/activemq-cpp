@@ -308,21 +308,21 @@ void ActiveMQDestinationSource::stop() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<cms::Queue*> ActiveMQDestinationSource::getQueues() const {
-    return this->impl->getQueues();
+std::shared_ptr<std::vector<cms::Queue*>> ActiveMQDestinationSource::getQueues() const {
+    return std::make_shared<std::vector<cms::Queue*>>(std::move(this->impl->getQueues()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<cms::Topic*> ActiveMQDestinationSource::getTopics() const {
-    return this->impl->getTopics();
+std::shared_ptr<std::vector<cms::Topic*>> ActiveMQDestinationSource::getTopics() const {
+    return std::make_shared<std::vector<cms::Topic*>>(std::move(this->impl->getTopics()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<cms::TemporaryQueue*> ActiveMQDestinationSource::getTemporaryQueues() const {
-    return this->impl->getTemporaryQueues();
+std::shared_ptr<std::vector<cms::TemporaryQueue*>> ActiveMQDestinationSource::getTemporaryQueues() const {
+    return std::make_shared<std::vector<cms::TemporaryQueue*>>(std::move(this->impl->getTemporaryQueues()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<cms::TemporaryTopic*> ActiveMQDestinationSource::getTemporaryTopics() const {
-    return this->impl->getTemporaryTopics();
+std::shared_ptr<std::vector<cms::TemporaryTopic*>> ActiveMQDestinationSource::getTemporaryTopics() const {
+    return std::make_shared<std::vector<cms::TemporaryTopic*>>(std::move(this->impl->getTemporaryTopics()));
 }

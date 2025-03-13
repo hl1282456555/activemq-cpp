@@ -89,7 +89,7 @@ unsigned char MessagePull::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string MessagePull::toString() const {
+std::shared_ptr<std::string> MessagePull::toString() const {
 
     ostringstream stream;
 
@@ -123,7 +123,7 @@ std::string MessagePull::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(stream.str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

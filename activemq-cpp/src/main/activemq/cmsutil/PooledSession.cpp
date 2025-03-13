@@ -165,11 +165,11 @@ std::string PooledSession::getUniqueDestName(const cms::Destination* dest) {
     std::string destName = "[";
     const cms::Queue* queue = dynamic_cast<const cms::Queue*>(dest);
     if (queue != NULL) {
-        destName += "q:" + queue->getQueueName();
+        destName += "q:" + *queue->getQueueName();
     } else {
         const cms::Topic* topic = dynamic_cast<const cms::Topic*>(dest);
         if (topic != NULL) {
-            destName += "t:" + topic->getTopicName();
+            destName += "t:" + *topic->getTopicName();
         }
     }
 

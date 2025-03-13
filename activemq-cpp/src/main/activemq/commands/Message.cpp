@@ -128,7 +128,7 @@ unsigned char Message::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Message::toString() const {
+std::shared_ptr<std::string> Message::toString() const {
 
     ostringstream stream;
 
@@ -278,7 +278,7 @@ std::string Message::toString() const {
     stream << "JMSXGroupFirstForConsumer = " << this->isJMSXGroupFirstForConsumer();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

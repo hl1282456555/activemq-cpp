@@ -85,7 +85,7 @@ unsigned char DataArrayResponse::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string DataArrayResponse::toString() const {
+std::shared_ptr<std::string> DataArrayResponse::toString() const {
 
     ostringstream stream;
 
@@ -106,7 +106,7 @@ std::string DataArrayResponse::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

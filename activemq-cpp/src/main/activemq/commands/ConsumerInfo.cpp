@@ -106,7 +106,7 @@ unsigned char ConsumerInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConsumerInfo::toString() const {
+std::shared_ptr<std::string> ConsumerInfo::toString() const {
 
     ostringstream stream;
 
@@ -194,7 +194,7 @@ std::string ConsumerInfo::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

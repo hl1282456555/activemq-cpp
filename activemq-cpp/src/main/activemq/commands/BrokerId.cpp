@@ -95,9 +95,9 @@ unsigned char BrokerId::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string BrokerId::toString() const {
+std::shared_ptr<std::string> BrokerId::toString() const {
 
-    return this->value;
+    return std::make_shared<std::string>(this->value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -175,6 +175,6 @@ BrokerId& BrokerId::operator= (const BrokerId& other) {
 
 ////////////////////////////////////////////////////////////////////////////////
 int BrokerId::getHashCode() const {
-    return decaf::util::HashCode<std::string>()(this->toString());
+    return decaf::util::HashCode<std::string>()(*this->toString());
 }
 

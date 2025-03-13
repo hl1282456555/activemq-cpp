@@ -45,7 +45,7 @@ TransactionState::~TransactionState() {
 std::string TransactionState::toString() const {
 
     if (this->id != NULL) {
-        return this->id->toString();
+        return *this->id->toString();
     }
 
     return "NULL";

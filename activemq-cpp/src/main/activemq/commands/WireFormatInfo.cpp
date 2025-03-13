@@ -83,7 +83,7 @@ unsigned char WireFormatInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string WireFormatInfo::toString() const {
+std::shared_ptr<std::string> WireFormatInfo::toString() const {
 
     std::ostringstream stream;
 
@@ -114,7 +114,7 @@ std::string WireFormatInfo::toString() const {
 
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

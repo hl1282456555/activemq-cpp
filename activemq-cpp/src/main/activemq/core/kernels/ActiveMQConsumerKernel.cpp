@@ -275,11 +275,11 @@ namespace kernels {
                 }
                 if (numberNotReplayed > 0) {
                     std::string txId = previouslyDeliveredMessages->transactionId != NULL ?
-                        previouslyDeliveredMessages->transactionId->toString() : "<None>";
+                        *previouslyDeliveredMessages->transactionId->toString() : "<None>";
                     std::string message = std::string("rolling back transaction (") + txId +
                         ") post failover recovery. " + Integer::toString(numberNotReplayed) +
                         " previously delivered message(s) not replayed to consumer: " +
-                        info->getConsumerId()->toString();
+                        *info->getConsumerId()->toString();
                     throw cms::TransactionRolledBackException(message);
                 }
             }
@@ -758,7 +758,7 @@ ActiveMQConsumerKernel::ActiveMQConsumerKernel(ActiveMQSessionKernel* session,
     Pointer<ConsumerInfo> consumerInfo(new ConsumerInfo());
 
     consumerInfo->setConsumerId(id);
-    consumerInfo->setClientId(session->getConnection()->getClientID());
+    consumerInfo->setClientId(*session->getConnection()->getClientID());
     consumerInfo->setDestination(destination);
     consumerInfo->setSubscriptionName(name);
     consumerInfo->setSelector(selector);
@@ -1002,10 +1002,10 @@ void ActiveMQConsumerKernel::dispose() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConsumerKernel::getMessageSelector() const {
+std::shared_ptr<std::string> ActiveMQConsumerKernel::getMessageSelector() const {
     try {
         checkClosed();
-        return this->consumerInfo->getSelector();
+        return std::make_shared<std::string>(std::move(this->consumerInfo->getSelector()));
     }
     AMQ_CATCH_ALL_THROW_CMSEXCEPTION()
 }
@@ -1046,7 +1046,7 @@ decaf::lang::Pointer<MessageDispatch> ActiveMQConsumerKernel::dequeue(long long 
                 sendPullRequest(timeout);
             } else if (internal->redeliveryExceeded(dispatch)) {
                 internal->posionAck(dispatch,
-                                    "dispatch to " + getConsumerId()->toString() +
+                                    "dispatch to " + *getConsumerId()->toString() +
                                     " exceeds RedeliveryPolicy limit: " +
                                     Integer::toString(internal->redeliveryPolicy->getMaximumRedeliveries()));
                 if (timeout > 0) {
@@ -1631,7 +1631,7 @@ void ActiveMQConsumerKernel::dispatch(const Pointer<MessageDispatch>& dispatch) 
                         if (this->internal->listener != NULL && this->internal->unconsumedMessages->isRunning()) {
                             if (this->internal->redeliveryExceeded(dispatch)) {
                                 internal->posionAck(dispatch,
-                                                    "dispatch to " + getConsumerId()->toString() +
+                                                    "dispatch to " + *getConsumerId()->toString() +
                                                     " exceeds redelivery policy limit:" +
                                                     Integer::toString(internal->redeliveryPolicy->getMaximumRedeliveries()));
                                 return;
@@ -1679,7 +1679,7 @@ void ActiveMQConsumerKernel::dispatch(const Pointer<MessageDispatch>& dispatch) 
                         this->dispatch(dispatch);
                     } else {
                         internal->posionAck(dispatch,
-                            std::string("Suppressing duplicate delivery on connection, consumer ") + getConsumerId()->toString());
+                            std::string("Suppressing duplicate delivery on connection, consumer ") + *getConsumerId()->toString());
                     }
                 }
             }
@@ -1903,7 +1903,7 @@ void ActiveMQConsumerKernel::applyDestinationOptions(Pointer<ConsumerInfo> info)
 
     std::string prefetchSizeStr = core::ActiveMQConstants::toString(core::ActiveMQConstants::CONSUMER_PREFECTCHSIZE);
     if (options.hasProperty(prefetchSizeStr)) {
-        info->setPrefetchSize(Integer::parseInt(options.getProperty(prefetchSizeStr, "1000")));
+        info->setPrefetchSize(Integer::parseInt(*options.getProperty(prefetchSizeStr, "1000")));
     }
 
     std::string retroactiveStr = core::ActiveMQConstants::toString(core::ActiveMQConstants::CONSUMER_RETROACTIVE);
@@ -1912,11 +1912,11 @@ void ActiveMQConsumerKernel::applyDestinationOptions(Pointer<ConsumerInfo> info)
     }
 
     this->internal->nonBlockingRedelivery = Boolean::parseBoolean(
-        options.getProperty("consumer.nonBlockingRedelivery", "false"));
+        *options.getProperty("consumer.nonBlockingRedelivery", "false"));
     this->internal->transactedIndividualAck = Boolean::parseBoolean(
-        options.getProperty("consumer.transactedIndividualAck", "false"));
+        *options.getProperty("consumer.transactedIndividualAck", "false"));
     this->internal->consumerExpiryCheckEnabled = Boolean::parseBoolean(
-        options.getProperty("consumer.consumerExpiryCheckEnabled", "true"));
+        *options.getProperty("consumer.consumerExpiryCheckEnabled", "true"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@ ConnectionState::~ConnectionState() {
 std::string ConnectionState::toString() const {
 
     if (this->info.get() != NULL) {
-        return this->info->toString();
+        return *this->info->toString();
     }
 
     return "NULL";

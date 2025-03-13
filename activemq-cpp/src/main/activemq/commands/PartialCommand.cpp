@@ -86,7 +86,7 @@ unsigned char PartialCommand::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string PartialCommand::toString() const {
+std::shared_ptr<std::string> PartialCommand::toString() const {
 
     ostringstream stream;
 
@@ -105,7 +105,7 @@ std::string PartialCommand::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

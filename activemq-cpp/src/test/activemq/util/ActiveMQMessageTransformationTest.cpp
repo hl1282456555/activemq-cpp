@@ -52,8 +52,8 @@ namespace {
 
         }
 
-        virtual std::string getTopicName() const {
-            return name;
+        virtual std::shared_ptr<std::string> getTopicName() const {
+            return std::make_shared<std::string>(name);
         }
 
         virtual cms::Destination::DestinationType getDestinationType() const {

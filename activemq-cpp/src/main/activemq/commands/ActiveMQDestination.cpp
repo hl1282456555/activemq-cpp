@@ -129,17 +129,17 @@ void ActiveMQDestination::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQDestination::toString() const {
+std::shared_ptr<std::string> ActiveMQDestination::toString() const {
 
     switch (this->getDestinationType()) {
         case cms::Destination::TOPIC:
-            return std::string("topic://") + this->getPhysicalName();
+            return std::make_shared<std::string>(std::string("topic://") + this->getPhysicalName());
         case cms::Destination::TEMPORARY_TOPIC:
-            return std::string("temp-topic://") + this->getPhysicalName();
+            return std::make_shared<std::string>(std::string("temp-topic://") + this->getPhysicalName());
         case cms::Destination::TEMPORARY_QUEUE:
-            return std::string("temp-queue://") + this->getPhysicalName();
+            return std::make_shared<std::string>(std::string("temp-queue://") + this->getPhysicalName());
         default:
-            return std::string("queue://") + this->getPhysicalName();
+            return std::make_shared<std::string>(std::string("queue://") + this->getPhysicalName());
     }
 }
 

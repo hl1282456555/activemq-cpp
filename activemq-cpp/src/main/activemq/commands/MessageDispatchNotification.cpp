@@ -88,7 +88,7 @@ unsigned char MessageDispatchNotification::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string MessageDispatchNotification::toString() const {
+std::shared_ptr<std::string> MessageDispatchNotification::toString() const {
 
     ostringstream stream;
 
@@ -120,7 +120,7 @@ std::string MessageDispatchNotification::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

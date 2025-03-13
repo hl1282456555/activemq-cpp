@@ -90,7 +90,7 @@ unsigned char JournalTopicAck::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string JournalTopicAck::toString() const {
+std::shared_ptr<std::string> JournalTopicAck::toString() const {
 
     ostringstream stream;
 
@@ -123,7 +123,7 @@ std::string JournalTopicAck::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

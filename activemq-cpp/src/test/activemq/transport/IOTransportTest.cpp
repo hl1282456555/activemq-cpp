@@ -54,7 +54,7 @@ public:
         return decaf::lang::Pointer<commands::Command>();
     }
 
-    virtual std::string toString() const{ return ""; }
+    virtual std::shared_ptr<std::string> toString() const{ return std::make_shared<std::string>(""); }
     virtual MyCommand* cloneDataStructure() const{
         MyCommand* command = new MyCommand;
         command->c = c;

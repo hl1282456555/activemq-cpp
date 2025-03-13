@@ -145,7 +145,7 @@ void ActiveMQStreamMessage::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQStreamMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQStreamMessage::toString() const {
     return ActiveMQMessageTemplate<cms::StreamMessage>::toString();
 }
 
@@ -802,7 +802,7 @@ void ActiveMQStreamMessage::writeLong(long long value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQStreamMessage::readString() const {
+std::shared_ptr<std::string> ActiveMQStreamMessage::readString() const {
 
     initializeReading();
     try {
@@ -814,38 +814,38 @@ std::string ActiveMQStreamMessage::readString() const {
             throw MessageEOFException("reached end of data", NULL);
         }
         if (type == PrimitiveValueNode::NULL_TYPE) {
-            return "";
+            return std::make_shared<std::string>("");
         }
         if (type == PrimitiveValueNode::BIG_STRING_TYPE) {
-            return MarshallingSupport::readString32(*this->dataIn);
+            return std::make_shared<std::string>(std::move(MarshallingSupport::readString32(*this->dataIn)));
         }
         if (type == PrimitiveValueNode::STRING_TYPE) {
-            return MarshallingSupport::readString16(*this->dataIn);
+            return std::make_shared<std::string>(std::move(MarshallingSupport::readString16(*this->dataIn)));
         }
         if (type == PrimitiveValueNode::LONG_TYPE) {
-            return Long(this->dataIn->readLong()).toString();
+            return std::make_shared<std::string>(std::move(Long(this->dataIn->readLong()).toString()));
         }
         if (type == PrimitiveValueNode::INTEGER_TYPE) {
-            return Integer(this->dataIn->readInt()).toString();
+            return std::make_shared<std::string>(std::move(Integer(this->dataIn->readInt()).toString()));
         }
         if (type == PrimitiveValueNode::SHORT_TYPE) {
-            return Short(this->dataIn->readShort()).toString();
+            return std::make_shared<std::string>(std::move(Short(this->dataIn->readShort()).toString()));
         }
         if (type == PrimitiveValueNode::BYTE_TYPE) {
-            return Byte(this->dataIn->readByte()).toString();
+            return std::make_shared<std::string>(std::move(Byte(this->dataIn->readByte()).toString()));
         }
         if (type == PrimitiveValueNode::FLOAT_TYPE) {
-            return Float(this->dataIn->readFloat()).toString();
+            return std::make_shared<std::string>(std::move(Float(this->dataIn->readFloat()).toString()));
         }
         if (type == PrimitiveValueNode::DOUBLE_TYPE) {
-            return Double(this->dataIn->readDouble()).toString();
+            return std::make_shared<std::string>(std::move(Double(this->dataIn->readDouble()).toString()));
         }
         if (type == PrimitiveValueNode::BOOLEAN_TYPE) {
-            return (this->dataIn->readBoolean() ? Boolean::_TRUE : Boolean::_FALSE).toString();
+            return std::make_shared<std::string>(std::move((this->dataIn->readBoolean() ? Boolean::_TRUE : Boolean::_FALSE).toString()));
         }
 
         if (type == PrimitiveValueNode::CHAR_TYPE) {
-            return Character(this->dataIn->readChar()).toString();
+            return std::make_shared<std::string>(std::move(Character(this->dataIn->readChar()).toString()));
         } else {
             this->dataIn->reset();
             throw MessageFormatException(" not a String type", NULL);

@@ -86,7 +86,7 @@ unsigned char DiscoveryEvent::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string DiscoveryEvent::toString() const {
+std::shared_ptr<std::string> DiscoveryEvent::toString() const {
 
     ostringstream stream;
 
@@ -96,7 +96,7 @@ std::string DiscoveryEvent::toString() const {
     stream << "BrokerName = " << this->getBrokerName();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

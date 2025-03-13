@@ -921,7 +921,7 @@ void ActiveMQSessionKernel::send(kernels::ActiveMQProducerKernel* producer, Poin
             Pointer<ActiveMQTempDestination> tempDest = destination.dynamicCast<ActiveMQTempDestination>();
             if (this->connection->isDeleted(tempDest)) {
                 throw cms::InvalidDestinationException(
-                    std::string("Cannot publish to a deleted Destination: ") + destination->toString());
+                    std::string("Cannot publish to a deleted Destination: ") + *destination->toString());
             }
         }
 
@@ -977,7 +977,7 @@ void ActiveMQSessionKernel::send(kernels::ActiveMQProducerKernel* producer, Poin
             }
 
             // Sets the Message ID on the original message per spec.
-            message->setCMSMessageID(id->toString());
+            message->setCMSMessageID(*id->toString());
             message->setCMSDestination(destination.dynamicCast<cms::Destination>().get());
 
             amqMessage->setMessageId(id);

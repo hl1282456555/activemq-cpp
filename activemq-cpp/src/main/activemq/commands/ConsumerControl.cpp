@@ -91,7 +91,7 @@ unsigned char ConsumerControl::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ConsumerControl::toString() const {
+std::shared_ptr<std::string> ConsumerControl::toString() const {
 
     ostringstream stream;
 
@@ -124,7 +124,7 @@ std::string ConsumerControl::toString() const {
     stream << "Stop = " << this->isStop();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

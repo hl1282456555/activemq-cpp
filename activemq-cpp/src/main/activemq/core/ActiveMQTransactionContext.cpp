@@ -754,7 +754,7 @@ XAException ActiveMQTransactionContext::toXAException(decaf::lang::Exception& ex
 
 ////////////////////////////////////////////////////////////////////////////////
 XAException ActiveMQTransactionContext::toXAException(cms::CMSException& ex) {
-    XAException xae(ex.getMessage(), ex.clone());
+    XAException xae(*ex.getMessage(), ex.clone());
     xae.setErrorCode(XAException::XAER_RMFAIL);
     return xae;
 }

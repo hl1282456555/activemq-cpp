@@ -222,7 +222,7 @@ Pointer<Response> ResponseCorrelator::request(const Pointer<Command> command) {
 
         if (response == NULL) {
             throw IOException(__FILE__, __LINE__,
-                "No valid response received for command: %s, check broker.", command->toString().c_str());
+                "No valid response received for command: %s, check broker.", command->toString()->c_str());
         }
 
         return response;
@@ -273,7 +273,7 @@ Pointer<Response> ResponseCorrelator::request(const Pointer<Command> command, un
 
         if (response == NULL) {
             throw IOException(__FILE__, __LINE__,
-                "No valid response received for command: %s, check broker.", command->toString().c_str());
+                "No valid response received for command: %s, check broker.", command->toString()->c_str());
         }
 
         return response;

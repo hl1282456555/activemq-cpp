@@ -85,7 +85,7 @@ unsigned char ControlCommand::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ControlCommand::toString() const {
+std::shared_ptr<std::string> ControlCommand::toString() const {
 
     ostringstream stream;
 
@@ -96,7 +96,7 @@ std::string ControlCommand::toString() const {
     stream << "Command = " << this->getCommand();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

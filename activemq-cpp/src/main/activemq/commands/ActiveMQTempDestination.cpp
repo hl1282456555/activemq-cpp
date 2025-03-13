@@ -72,7 +72,7 @@ void ActiveMQTempDestination::setPhysicalName(const std::string& physicalName) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQTempDestination::toString() const {
+std::shared_ptr<std::string> ActiveMQTempDestination::toString() const {
     return ActiveMQDestination::toString();
 }
 

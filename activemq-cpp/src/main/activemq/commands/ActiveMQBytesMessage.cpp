@@ -129,7 +129,7 @@ void ActiveMQBytesMessage::copyDataStructure(const DataStructure* src) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQBytesMessage::toString() const {
+std::shared_ptr<std::string> ActiveMQBytesMessage::toString() const {
     return ActiveMQMessageTemplate<cms::BytesMessage>::toString();
 }
 
@@ -529,11 +529,11 @@ void ActiveMQBytesMessage::writeLong(long long value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQBytesMessage::readString() const {
+std::shared_ptr<std::string> ActiveMQBytesMessage::readString() const {
 
     initializeReading();
     try {
-        return this->dataIn->readString();
+        return std::make_shared<std::string>(this->dataIn->readString());
     } catch (EOFException& ex) {
         throw CMSExceptionSupport::createMessageEOFException(ex);
     } catch (IOException& ex) {
@@ -557,11 +557,11 @@ void ActiveMQBytesMessage::writeString(const std::string& value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQBytesMessage::readUTF() const {
+std::shared_ptr<std::string> ActiveMQBytesMessage::readUTF() const {
 
     initializeReading();
     try {
-        return this->dataIn->readUTF();
+        return std::make_shared<std::string>(this->dataIn->readUTF());
     } catch (EOFException& ex) {
         throw CMSExceptionSupport::createMessageEOFException(ex);
     } catch (IOException& ex) {

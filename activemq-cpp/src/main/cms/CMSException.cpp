@@ -107,7 +107,7 @@ void CMSException::printStackTrace(std::ostream& stream) const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string CMSException::getStackTraceString() const {
+std::shared_ptr<std::string> CMSException::getStackTraceString() const {
 
     // Create the output stream.
     std::ostringstream stream;
@@ -121,12 +121,12 @@ std::string CMSException::getStackTraceString() const {
     }
 
     // Return the string from the output stream.
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string CMSException::getMessage() const {
-    return this->data->message;
+std::shared_ptr<std::string> CMSException::getMessage() const {
+    return std::make_shared<std::string>(this->data->message);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,8 +135,8 @@ const std::exception* CMSException::getCause() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector<std::pair<std::string, int> > CMSException::getStackTrace() const {
-    return this->data->stackTrace;
+std::shared_ptr<std::vector<std::pair<std::string, int> >> CMSException::getStackTrace() const {
+    return std::make_shared<std::vector<std::pair<std::string, int> >>(this->data->stackTrace);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

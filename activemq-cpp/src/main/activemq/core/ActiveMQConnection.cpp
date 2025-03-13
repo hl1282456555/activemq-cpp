@@ -299,7 +299,7 @@ namespace core {
             this->executor.reset(
                 new ThreadPoolExecutor(1, 1, 5, TimeUnit::SECONDS,
                     new LinkedBlockingQueue<Runnable*>(),
-                    new ConnectionThreadFactory(connectionId->toString())));
+                    new ConnectionThreadFactory(*connectionId->toString())));
 
             this->connectionInfo->setConnectionId(connectionId);
             this->scheduler.reset(new Scheduler(std::string("ActiveMQConnection[")+uniqueId+"] Scheduler"));
@@ -637,13 +637,13 @@ void ActiveMQConnection::removeProducer(const decaf::lang::Pointer<ProducerId>& 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string ActiveMQConnection::getClientID() const {
+std::shared_ptr<std::string> ActiveMQConnection::getClientID() const {
 
     if (this->isClosed()) {
-        return "";
+        return std::make_shared<std::string>();
     }
 
-    return this->config->connectionInfo->getClientId();
+    return std::make_shared<std::string>(this->config->connectionInfo->getClientId());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1910,7 +1910,7 @@ void ActiveMQConnection::cleanUpTempDestinations() {
             // advisory consumer tracks all temporary destinations there can be others in our mapping that
             // this connection did not create.
             std::string thisConnectionId =
-                    this->config->connectionInfo->getConnectionId() != NULL ? this->config->connectionInfo->getConnectionId()->toString() : "";
+                    this->config->connectionInfo->getConnectionId() != NULL ? *this->config->connectionInfo->getConnectionId()->toString() : "";
             if (dest->getConnectionId() == thisConnectionId) {
                 this->deleteTempDestination(dest);
             }

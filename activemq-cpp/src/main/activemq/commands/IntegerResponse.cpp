@@ -85,7 +85,7 @@ unsigned char IntegerResponse::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string IntegerResponse::toString() const {
+std::shared_ptr<std::string> IntegerResponse::toString() const {
 
     ostringstream stream;
 
@@ -93,7 +93,7 @@ std::string IntegerResponse::toString() const {
     stream << "Result = " << this->getResult();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

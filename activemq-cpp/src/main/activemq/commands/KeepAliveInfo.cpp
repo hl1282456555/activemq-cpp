@@ -84,7 +84,7 @@ unsigned char KeepAliveInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string KeepAliveInfo::toString() const {
+std::shared_ptr<std::string> KeepAliveInfo::toString() const {
 
     ostringstream stream;
 
@@ -93,7 +93,7 @@ std::string KeepAliveInfo::toString() const {
            << "responseRequired = " << boolalpha << this->isResponseRequired();
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

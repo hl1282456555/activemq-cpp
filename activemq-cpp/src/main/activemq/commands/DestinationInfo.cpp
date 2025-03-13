@@ -89,7 +89,7 @@ unsigned char DestinationInfo::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string DestinationInfo::toString() const {
+std::shared_ptr<std::string> DestinationInfo::toString() const {
 
     ostringstream stream;
 
@@ -131,7 +131,7 @@ std::string DestinationInfo::toString() const {
     }
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(stream.str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

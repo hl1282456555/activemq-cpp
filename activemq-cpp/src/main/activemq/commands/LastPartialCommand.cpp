@@ -84,14 +84,14 @@ unsigned char LastPartialCommand::getDataStructureType() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string LastPartialCommand::toString() const {
+std::shared_ptr<std::string> LastPartialCommand::toString() const {
 
     ostringstream stream;
 
     stream << "LastPartialCommand { ";
     stream << " }";
 
-    return stream.str();
+    return std::make_shared<std::string>(std::move(stream.str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

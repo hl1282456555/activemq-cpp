@@ -307,7 +307,7 @@ void ConnectionStateTracker::doRestoreTransactions(Pointer<transport::Transport>
             Pointer<BrokerError> exception(new BrokerError());
             exception->setExceptionClass("TransactionRolledBackException");
             exception->setMessage(
-                    std::string("Transaction completion in doubt due to failover. Forcing rollback of ") + (*command)->getTransactionId()->toString());
+                    std::string("Transaction completion in doubt due to failover. Forcing rollback of ") + *(*command)->getTransactionId()->toString());
             response->setException(exception);
             response->setCorrelationId((*command)->getCommandId());
             transport->getTransportListener()->onCommand(response);
@@ -828,7 +828,7 @@ Pointer<Command> ConnectionStateTracker::processMessagePull(MessagePull* pull) {
     try {
 
         if (pull != NULL && pull->getDestination() != NULL && pull->getConsumerId() != NULL) {
-            std::string id = pull->getDestination()->toString() + "::" + pull->getConsumerId()->toString();
+            std::string id = *pull->getDestination()->toString() + "::" + *pull->getConsumerId()->toString();
             this->impl->messagePullCache.put(id, Pointer<Command>(pull->cloneDataStructure()));
         }
 
