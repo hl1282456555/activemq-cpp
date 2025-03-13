@@ -212,6 +212,52 @@ std::string ActiveMQTextMessage::getText() const {
     AMQ_CATCH_ALL_THROW_CMSEXCEPTION()}
 
 ////////////////////////////////////////////////////////////////////////////////
+std::shared_ptr<std::string> activemq::commands::ActiveMQTextMessage::getTextPtr() const
+{
+    try
+    {
+
+        if (this->text.get() != NULL)
+        {
+            return std::make_shared<std::string>(*(this->text.get()));
+        }
+        else
+        {
+
+            if (this->getContent().size() <= 4)
+            {
+                return std::make_shared<std::string>();
+            }
+
+            try
+            {
+
+                InputStream* is = new ByteArrayInputStream(getContent());
+
+                if (isCompressed())
+                {
+                    is = new InflaterInputStream(is, true);
+                }
+
+                DataInputStream dataIn(is, true);
+
+                this->text.reset(new std::string(MarshallingSupport::readString32(dataIn)));
+
+                dataIn.close();
+
+            }
+            catch (IOException& ioe)
+            {
+                throw CMSExceptionSupport::create(ioe);
+            }
+        }
+
+        return std::make_shared<std::string>(*(this->text.get()));
+    }
+    AMQ_CATCH_ALL_THROW_CMSEXCEPTION()
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void ActiveMQTextMessage::setText(const char* msg) {
 
     try {
