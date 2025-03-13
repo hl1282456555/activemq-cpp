@@ -24,3 +24,5 @@ configure
 
 ThirdParty/
 activemq-cpp/install
+activemq-cpp/vs2010-build/x64
+activemq-cpp/vs2010-build/.vs
